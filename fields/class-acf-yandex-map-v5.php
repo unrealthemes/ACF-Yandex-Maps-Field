@@ -49,7 +49,9 @@ class YMF_Acf_Field_Yandex_Map extends acf_field {
 
 			$url = $this->settings['url'];
 			$version = $this->settings['version'];
-			wp_register_script( 'yandex-map-api', '//api-maps.yandex.ru/2.1/?lang=' . get_bloginfo( 'language' ), ['jquery'], $version );
+			$options = get_option('ymf_options');
+			$api_key = $options['ymf_field_api_key'] ?? '';
+			wp_register_script( 'yandex-map-api', '//api-maps.yandex.com/2.1/?lang=' . get_bloginfo( 'language' ) .'&amp;apikey=' . $api_key, ['jquery'], $version );
 			wp_register_script( 'yandex-map-frontend', "{$url}js/acf-yandex-map-frontend.js", ['yandex-map-api'], 'acf-yandex-map' );
 			wp_enqueue_script( 'yandex-map-frontend' );
 			$map_id = uniqid('map_');
@@ -196,8 +198,9 @@ class YMF_Acf_Field_Yandex_Map extends acf_field {
 
 		$url = $this->settings['url'];
 		$version = $this->settings['version'];
-
-		wp_register_script( 'yandex-map-api', '//api-maps.yandex.ru/2.1/?lang=' . get_bloginfo( 'language' ), ['jquery'], $version );
+		$options = get_option('ymf_options');
+		$api_key = $options['ymf_field_api_key'] ?? '';
+		wp_register_script( 'yandex-map-api', '//api-maps.yandex.com/2.1/?lang=' . get_bloginfo( 'language' ) .'&amp;apikey=' . $api_key, ['jquery'], $version );
 		wp_register_script( 'acf-yandex', "{$url}js/acf-yandex-map-admin.js", ['yandex-map-api'], $version, true );
 
 		wp_localize_script( 'acf-yandex', 'acf_yandex_locale', [
